@@ -1,0 +1,42 @@
+<div>
+	<form id="init-form">
+		<% if(errors && errors.non_field_errors) { %>
+			<div class="alert alert-danger">
+				<% _.each(errors.non_field_errors, function(obj) { %>
+					<%= obj %>
+				<% }); %>
+			</div>
+		<% } %>
+		<fieldset>
+			<legend>Expected Annual Return</legend>
+			<br>
+			<% if(errors && errors.expected_return) { %>
+				<div class="alert alert-danger">
+					<%= errors.expected_return %>
+				</div>
+			<% } %>
+			<input type="text" name="expected_return" placeholder="ex: 6.8%"/>
+			<p class="help-block">Example block-level help text here.</p>
+		</fieldset>
+		<fieldset>
+			<legend>Expected Remaining Years of Life</legend>
+			<br>
+			<% if(errors && errors.expected_life) { %>
+				<div class="alert alert-danger">
+					<%= errors.expected_life %>
+				</div>
+			<% } %>
+
+			<input type="text" name="expected_life" placeholder="ex: 60"/>
+			<p class="help-block">Example block-level help text here.</p>
+		</fieldset>
+		<div>
+			<a href="javascript:void(0)"
+				class="btn btn-primary"
+				id="init-quiz">
+				Begin Quiz
+			</a>
+		</div>
+	</form>
+
+</div>
