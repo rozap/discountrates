@@ -81,7 +81,6 @@ var QuestionView = NiceView.extend({
 	getQuestion : function() {
 		var that = this;
 		this.question = new Question({quiz : this.quiz});
-		///this.listenTo(this.question, 'sync', this.render)
 		this.question.fetch({
 			wait : true,
 			success : function(model, resp, opts) {
@@ -94,11 +93,8 @@ var QuestionView = NiceView.extend({
 	},
 
 	keyAnswer : function(e) {
-		if(e.keyCode === 76) {
-			this.answerLater();
-		} else if(e.keyCode === 78) {
-			this.answerNow();
-		}
+		e.keyCode === 76 && this.answerLater();
+		e.keyCode === 78 && this.answerNow();
 	},
 
 	answerNow : function() {
