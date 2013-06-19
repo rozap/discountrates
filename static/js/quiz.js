@@ -9,8 +9,6 @@ var Question = Backbone.Model.extend({
 
 	initialize : function(opts) {
 		this.quiz = opts.quiz;
-		console.log(this.quiz);
-		console.log(this.quiz.url())
 	},
 
 	url : function() {
@@ -91,13 +89,11 @@ var QuestionView = NiceView.extend({
 				that.render();
 			},
 			error : function() {
-				console.log("error");
 			}
 		});
 	},
 
 	keyAnswer : function(e) {
-		console.log(e);
 		if(e.keyCode === 76) {
 			this.answerLater();
 		} else if(e.keyCode === 78) {

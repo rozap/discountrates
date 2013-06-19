@@ -36,19 +36,30 @@
 			var that = this;
 			this.quiz = new Quiz({id : opts.id});
 			this.results = new TestResults({quiz : this.quiz});
+			loadTemplate('result-template', '/static/templates/quiz/result.html');
+			this.template = _.template($('#result-template').html());
 			this.results.fetch({
 				success : function(result, resp, opts) {
 					that.scatterPlot(result);	
 					that.columnChart(result);			
+					that.describe(result);
 				}
 			});
+		},
+
+
+		describe : function(result) { 
+
+			$('#description').html(this.template(result.toJSON()));
+
+
 		},
 
 		scatterPlot : function(results) {
 			var options = {
 				title: 'Some Title',
 				hAxis: {title: 'Discount Rate'},
-				vAxis: {title: 'Years', minValue: 0, maxValue: 15},
+				vAxis: {title: 'Years'},
 				legend: 'none'
 			};
 			var data = new google.visualization.DataTable();
@@ -69,18 +80,18 @@
 		},
 
 		columnChart : function(results) {
-			var stabilities = [];
-			var avg = Math.round(results.get('avg'));
+			var stabilities = [[0,0,0]];
+			var overlap = Math.round(results.get('quiz').overlap);
 			for(s in results.get('stabilities')) {
 				var i = parseInt(s);
 				var stability = results.get('stabilities')[s]
-
-				if(avg == i) {
+				if(overlap == i) {
 					var arr = [i, 0, stability]
 				} else {
 					var arr = [i, stability, 0]
 				}
-				stabilities.push(arr)
+				stabilities.push(arr);
+				
 			}
 	        var data = google.visualization.arrayToDataTable(stabilities);
 
@@ -88,7 +99,7 @@
 	        	isStacked : true,
 				title: 'Stability',
 				vAxis : {title : 'Count'},
-				hAxis: {title: 'Stability'}
+				hAxis: {title: 'Stability', minValue : -.5}
 	        };
 
 	        var chart = new google.visualization.ColumnChart($('#column-chart')[0]);
@@ -117,6 +128,7 @@
 	<div id="result-body" class="col col-lg-8 col-offset-2">
 		<div id="scatter-plot"></div>
 		<div id="column-chart"></div>
+		<div id="description"></div>
 
 	</div>
 

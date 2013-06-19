@@ -88,6 +88,6 @@ def result(request, quiz_id):
         stabilities[o] = stabilities[o] + 1
     avg = np.mean(overlaps)
     stdev = np.std(overlaps)
-    return {'avg' : avg, 'std' : stdev, 'stabilities' : stabilities, 'questions' : list(questions)}
+    return {'avg' : avg, 'std' : stdev, 'stabilities' : stabilities, 'quiz' : quiz, 'questions' : list(questions)}
 
     
