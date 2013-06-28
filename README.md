@@ -13,4 +13,5 @@ which will install all the dependencies. make sure to have a mysql database avai
 
 then you can
 > python manage.py runserver
+
 and hack away
