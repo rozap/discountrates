@@ -8,6 +8,7 @@ class Quiz(ResourceModel):
     session = models.CharField(max_length = 512)
     expected_return = models.DecimalField(max_digits = 4, decimal_places = 2)
     expected_life = models.IntegerField(default = 60)
+    net_worth = models.IntegerField(default = 0)
     create_date = models.DateTimeField(auto_now_add = True, default = datetime.now())
     overlap = models.IntegerField(default = None, null = True)
 

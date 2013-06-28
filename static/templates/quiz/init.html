@@ -8,18 +8,18 @@
 			</div>
 		<% } %>
 		<fieldset>
-			<legend>Expected Annual Return</legend>
+			<legend>What is your expected annual return on money?</legend>
 			<br>
 			<% if(errors && errors.expected_return) { %>
 				<div class="alert alert-danger">
 					<%= errors.expected_return %>
 				</div>
 			<% } %>
-			<input type="text" name="expected_return" placeholder="ex: 6.8%"/>
-			<p class="help-block">Example block-level help text here.</p>
+			<input type="text" name="expected_return" placeholder="ex: 6.8"/>
+			<p class="help-block">Annual return describes the growth of your existing money from year to year, e.g. a savings account might give 1% interest, making $100 in the account worth $101 after a year.<br><i>If you're not sure, the US stock market for the past twenty years has returned 9.6%</p>
 		</fieldset>
 		<fieldset>
-			<legend>Expected Remaining Years of Life</legend>
+			<legend>How many more years do you expect to be alive?</legend>
 			<br>
 			<% if(errors && errors.expected_life) { %>
 				<div class="alert alert-danger">
@@ -28,7 +28,20 @@
 			<% } %>
 
 			<input type="text" name="expected_life" placeholder="ex: 60"/>
-			<p class="help-block">Example block-level help text here.</p>
+			<p class="help-block">If you're 18 today, and plan on dying at age 25, put 7 in this box.</p>
+		</fieldset>
+		<fieldset>
+			<legend>What's your net worth today?
+			</legend>
+			<br>
+			<% if(errors && errors.net_worth) { %>
+				<div class="alert alert-danger">
+					<%= errors.net_worth %>
+				</div>
+			<% } %>
+
+			<input type="text" name="net_worth" placeholder="ex: 1000"/>
+			<p class="help-block">If you have $1,000 and $200 in debt, your net worth is $800.</p>
 		</fieldset>
 		<div>
 			<a href="javascript:void(0)"
