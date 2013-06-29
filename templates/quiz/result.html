@@ -57,7 +57,7 @@
 
 		scatterPlot : function(results) {
 			var options = {
-				title: 'Some Title',
+				title: 'Your Imputed Discount Rates',
 				hAxis: {title: 'Discount Rate'},
 				vAxis: {title: 'Years'},
 				legend: 'none'
@@ -97,9 +97,9 @@
 
 	        var options = {
 	        	isStacked : true,
-				title: 'Stability',
-				vAxis : {title : 'Count'},
-				hAxis: {title: 'Stability', minValue : -.5}
+				title: 'Consistency',
+				vAxis : {title : 'Frequency of Consistency Score'},
+				hAxis: {title: 'Number of Times Your Imputed Discount Rates Were Inconsistent', minValue : -.5}
 	        };
 
 	        var chart = new google.visualization.ColumnChart($('#column-chart')[0]);
@@ -123,7 +123,7 @@
 
 <div class="row">
 	<div class="col col-lg-8 col-offset-2">
-		<h2>discount rates.</h2>
+		<h2>Your Results</h2>
 	</div>
 	<div id="result-body" class="col col-lg-8 col-offset-2">
 		<div id="scatter-plot"></div>
