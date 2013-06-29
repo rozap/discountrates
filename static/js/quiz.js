@@ -63,6 +63,8 @@ var QuestionView = NiceView.extend({
 
 	el : '#quiz-body',
 
+	numQuestions : 16,
+
 	events : _.extend({}, NiceView.prototype.evs, {
 		'click .answer-now' : 'answerNow',
 		'click .answer-later' : 'answerLater',
@@ -112,7 +114,7 @@ var QuestionView = NiceView.extend({
 		this.question.sync('update', this.question, {
 			wait : true, 
 			success : function() {
-				if(that.question.get('order') >= 10) {
+				if(that.question.get('order') >= that.numQuestions) {
 					window.location = '/result/'+that.quiz.get('id')
 				} else {
 					that.getQuestion();
@@ -126,6 +128,12 @@ var QuestionView = NiceView.extend({
 		this.$el.html(this.template({
 			question : that.question.toJSON()
 		}));
+
+		console.log((Math.max((this.question.get('order') / this.numQuestions), .02) * 100));
+		$('.progress-bar').css({
+			width : (Math.max((this.question.get('order') / this.numQuestions), .02) * 100)+'%'
+		});
+		$('#progress-text').text('Question ' + (this.question.get('order')+1) + ' of ' + (this.numQuestions+1));
 	}
 
 
