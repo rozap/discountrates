@@ -11,7 +11,7 @@ class Quiz(ResourceModel):
     net_worth = models.IntegerField(default = 0)
     create_date = models.DateTimeField(auto_now_add = True, default = datetime.now())
     overlap = models.IntegerField(default = None, null = True)
-    avg_rate = models.DecimalField(max_digits = 6, decimal_places = 5)
+    avg_rate = models.DecimalField(max_digits = 6, decimal_places = 5, null = True)
 
 
 class Question(ResourceModel):
