@@ -7,6 +7,7 @@ from discount.util import get_moneys, get_overlap
 import json
 import numpy as np
 import uuid
+import math
 
 
 @json_view
@@ -74,20 +75,50 @@ def result(request, quiz_id):
     except Quiz.DoesNotExist:
         return ({'error' : 'Not found'}, 404)
 
-    if quiz.overlap == None:
-        quiz.overlap = get_overlap(quiz)
-        quiz.save()
 
     questions = Question.objects.filter(quiz = quiz)
 
+    if quiz.overlap == None:
+        quiz.overlap = get_overlap(quiz)
+
+        rates = [float(q.discount_rate) for q in questions]
+        quiz.avg_rate = np.mean(rates)
+        quiz.save()
+
+
+
 
     quizzes = Quiz.objects.filter(overlap__isnull = False)
+
     overlaps = [q.overlap for q in quizzes]
     stabilities = {i : 0 for i in range(21)}
     for o in overlaps:
         stabilities[o] = stabilities[o] + 1
     avg = np.mean(overlaps)
     stdev = np.std(overlaps)
-    return {'avg' : avg, 'std' : stdev, 'stabilities' : stabilities, 'quiz' : quiz, 'questions' : list(questions)}
+
+    average_rates = [float(q.avg_rate) for q in quizzes]
+    bucket_num = 20
+    average_buckets = {i : 0 for i in range(bucket_num)}
+    #Constrain rate between .978 and 1
+    base_rate = .978
+    window = float(1 - base_rate)
+    inc = window/bucket_num
+    for a in average_rates:
+        b = math.floor((a - base_rate) / inc)
+        average_buckets[b] = stabilities[b] + 1
+    rate_avg = np.mean(average_rates)
+    rate_stdev = np.std(average_rates)
+
+    final_buckets = {}
+    for k in average_buckets:
+        nk = base_rate + (inc * int(k))
+        final_buckets[nk] = average_buckets[k]
+    
+
+
+    return {'stability_avg' : avg, 'stability_stdev' : stdev, 'stabilities' : stabilities, 
+            'averages' : final_buckets, 'avg_rate' : rate_avg, 'rate_stdev' : rate_stdev,
+            'quiz' : quiz, 'questions' : list(questions)}
 
     

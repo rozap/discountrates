@@ -6,6 +6,24 @@
 {% block javascript %}
 <script type="text/javascript" src="/static/js/quiz.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/template" id="consistency-template">
+<div class="row">
+	<div class="col col-lg-12">
+		The average consistency value is
+		 <%= stability_avg.toFixed(2) %>, with a standard deviation of
+		 <%= stability_stdev.toFixed(2) %>. This means that you are <%= ((stability_avg - quiz.overlap) / stability_stdev).toFixed(2) %> standard deviations away from the average in discount rate consistency.
+	</div>
+</div>
+</script>
+<script type="text/template" id="averages-template">
+<div class="row">
+	<div class="col col-lg-12">
+		The average discount rate is 
+		 <%= avg_rate.toFixed(4) %>, with a standard deviation of
+		 <%= rate_stdev.toFixed(4) %>. Your average rate was <%= quiz.avg_rate.toFixed(4) %>. This means that you are <%= ((avg_rate - quiz.avg_rate) / stability_stdev).toFixed(4) %> standard deviations away from the average in discount rate consistency.
+	</div>
+</div>
+</script>
 <script type="text/javascript">
 	google.load("visualization", "1", {packages:["corechart"]});
 	google.setOnLoadCallback(function() {
@@ -36,12 +54,11 @@
 			var that = this;
 			this.quiz = new Quiz({id : opts.id});
 			this.results = new TestResults({quiz : this.quiz});
-			loadTemplate('result-template', '/static/templates/quiz/result.html');
-			this.template = _.template($('#result-template').html());
 			this.results.fetch({
 				success : function(result, resp, opts) {
 					that.scatterPlot(result);	
-					that.columnChart(result);			
+					that.stabilitiesChart(result);
+					that.averagesChart(result);	
 					that.describe(result);
 				}
 			});
@@ -49,9 +66,11 @@
 
 
 		describe : function(result) { 
-
-			$('#description').html(this.template(result.toJSON()));
-
+			var data = result.toJSON();
+			var consistencyTemplate = _.template($('#consistency-template').html());
+			$('#description').html(consistencyTemplate(data));
+			var averagesTemplate = _.template($('#averages-template').html());
+			$('#averages-description').html(averagesTemplate(data));
 
 		},
 
@@ -79,7 +98,7 @@
 			chart.draw(data, options);
 		},
 
-		columnChart : function(results) {
+		stabilitiesChart : function(results) {
 			var stabilities = [[0,0,0]];
 			var overlap = Math.round(results.get('quiz').overlap);
 			for(s in results.get('stabilities')) {
@@ -96,15 +115,57 @@
 	        var data = google.visualization.arrayToDataTable(stabilities);
 
 	        var options = {
+	        	legend : {position : 'none'},
 	        	isStacked : true,
 				title: 'Consistency',
 				vAxis : {title : 'Frequency of Consistency Score'},
 				hAxis: {title: 'Number of Times Your Imputed Discount Rates Were Inconsistent', minValue : -.5}
 	        };
 
-	        var chart = new google.visualization.ColumnChart($('#column-chart')[0]);
+	        var chart = new google.visualization.ColumnChart($('#stabilities-chart')[0]);
 	        chart.draw(data, options);
 		},
+
+		averagesChart : function(results) {
+			var averages = [[0,0,0]];
+			//hahaha wtf am i doing
+			var rateAvg = results.get('quiz').avg_rate;
+			var i = 1;
+			for(s in results.get('averages')) {
+				var k = parseFloat(s);
+				var nd = Math.abs(k - rateAvg);
+				var od = Math.abs(i - rateAvg);
+				if(nd < od && k < i) {
+					i = k;
+				}
+			}
+			//try to find the key that is closest, but less than the quiz's average
+			//so that we can highlight it in red. This key will be assigned to variable i
+			for(s in results.get('averages')) {
+				var k = parseFloat(s);
+				var a = results.get('averages')[s]
+				//console.log(i)
+				if(k == i) {
+					var arr = [k, 0, a]
+				} else {
+					var arr = [k, a, 0]
+				}
+				averages.push(arr);
+				
+			}
+	        var data = google.visualization.arrayToDataTable(averages);
+
+	        var options = {
+	        	legend : {position : 'none'},
+	        	isStacked : true,
+				title: 'Average Discount Rates',
+				vAxis : {title : 'Frequency of Average Rate'},
+				hAxis: {title: 'Average discount rates across the population', minValue : .978}
+	        };
+
+	        var chart = new google.visualization.ColumnChart($('#averages-chart')[0]);
+	        chart.draw(data, options);
+		}
 
 
 
@@ -120,16 +181,16 @@
 
 {% block main %}
 
-
 <div class="row">
 	<div class="col col-lg-8 col-offset-2">
 		<h2>Your Results</h2>
 	</div>
 	<div id="result-body" class="col col-lg-8 col-offset-2">
 		<div id="scatter-plot"></div>
-		<div id="column-chart"></div>
+		<div id="stabilities-chart" class="chart"></div>
 		<div id="description"></div>
-
+		<div id="averages-chart" class="chart"></div>
+		<div id="averages-description"></div>
 	</div>
 
 </div>
