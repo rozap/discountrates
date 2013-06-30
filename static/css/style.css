@@ -4465,3 +4465,7 @@ a.list-group-item.active > .badge,
   font-size: 21.599999999999998px;
   padding: 30px;
 }
+legend {
+  margin-bottom: 0px;
+  margin-top: 60px;
+}

@@ -19,6 +19,19 @@ class QuizValidator(Validator):
             except ValueError:
                 self.add_field_error('expected_life', 'Your expected remaining years needs to be a number')           
 
+            try:
+                self.data['net_worth'] = float(self.data['net_worth'])
+            except ValueError:
+                self.add_field_error('net_worth', 'Your net worth needs to be a number')           
+
+            try:
+                self.data['save_priority'] = float(self.data['save_priority'])
+                if(self.data['save_priority'] < 0 or self.data['save_priority'] > 7):
+                    self.add_field_error('save_priority', 'Your priority of saving for the future needs to be between 0 and 7')           
+
+            except ValueError:
+                self.add_field_error('save_priority', 'Your priority of saving for the future needs to be a number')           
+
 
         except KeyError:
             self.add_error('Missing fields')

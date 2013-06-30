@@ -1,8 +1,6 @@
 <div id="intro" style="text-align: center; margin-bottom: 50px">
-	<h2>
-	<p>Would you rather have $100,000 today or $500,000 a year from now?</p></h2>
+	<h2>Would you rather have $100,000 today or $500,000 a year from now?</h2>
 	<p>Find out about yourself and compare yourself to others by taking a short survey.</p>
-	</h3>
 </div>
 
 <div>
@@ -15,6 +13,8 @@
 			</div>
 		<% } %>
 		<fieldset>
+
+
 			<legend>What is your expected annual return on money?</legend>
 			<br>
 			<% if(errors && errors.expected_return) { %>
@@ -24,8 +24,8 @@
 			<% } %>
 			<input type="text" name="expected_return" placeholder="ex: 6.8"/>
 			<p class="help-block">Annual return describes the growth of your existing money from year to year, e.g. a savings account might give 1% interest, making $100 in the account worth $101 after a year.<br><i>If you're not sure, the US stock market for the past twenty years has returned 9.6%</i></p>
-		</fieldset>
-		<fieldset>
+
+
 			<legend>How many more years do you expect to be alive?</legend>
 			<br>
 			<% if(errors && errors.expected_life) { %>
@@ -36,10 +36,9 @@
 
 			<input type="text" name="expected_life" placeholder="ex: 60"/>
 			<p class="help-block">If you're 18 today, and plan on dying at age 25, put 7 in this box.</p>
-		</fieldset>
-		<fieldset>
-			<legend>What's your net worth today?
-			</legend>
+
+
+			<legend>What's your net worth today?</legend>
 			<br>
 			<% if(errors && errors.net_worth) { %>
 				<div class="alert alert-danger">
@@ -49,6 +48,18 @@
 
 			<input type="text" name="net_worth" placeholder="ex: 1000"/>
 			<p class="help-block">If you have $1,000 and $200 in debt, your net worth is $800.</p>
+
+
+			<legend>How important is saving for the future?</legend>
+			<br>
+			<% if(errors && errors.save_priority) { %>
+				<div class="alert alert-danger">
+					<%= errors.save_priority %>
+				</div>
+			<% } %>
+
+			<input type="text" name="save_priority" placeholder="ex: 4"/>
+			<p class="help-block">Rate on a scale of 0 to 7, with 0 being not important, and 7 being very important.</p>
 		</fieldset>
 		<div>
 			<a href="javascript:void(0)"

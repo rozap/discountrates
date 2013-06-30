@@ -23,6 +23,8 @@ def quiz(request):
             session = session, 
             expected_return = data['expected_return'],
             expected_life = data['expected_life'],
+            save_priority = data['save_priority'],
+            net_worth = data['net_worth']
             )
         quiz.save()
         return quiz
