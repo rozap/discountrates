@@ -4461,3 +4461,7 @@ a.list-group-item.active > .badge,
 #result-body {
   margin-bottom: 120px;
 }
+.btn-block {
+  font-size: 21.599999999999998px;
+  padding: 30px;
+}

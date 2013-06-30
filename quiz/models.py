@@ -26,6 +26,5 @@ class Question(ResourceModel):
 
     def as_resource(self):
         d = super(Question, self).as_resource()
-        d['text'] = 'Would you rather take $%s now or $%s %s years from now?' % (format(int(self.start_amount), ",d"), format(int(self.end_amount), ",d"), self.years)
         return d
 
