@@ -11,7 +11,7 @@
 		<a href="javascript:void(0)"
 			class="btn btn-primary btn-large answer-now  btn-block"
 			>
-			$<%= numberWithCommas(Math.round(question.start_amount)) %> now
+			$<%= numberWithCommas(Math.round(question.start_amount)) %> <br>now
 		</a>
 	</div>
 	<div class="col col-lg-2">
@@ -21,7 +21,7 @@
 		<a href="javascript:void(0)"
 			class="btn btn-primary btn-large answer-later btn-block"
 			data-answer="later">
-			$<%= numberWithCommas(Math.round(question.end_amount)) %> in <%= question.years %> year<%= question.years == 1? '' : 's' %>
+			$<%= numberWithCommas(Math.round(question.end_amount)) %> <br>in <%= question.years %> year<%= question.years == 1? '' : 's' %>
 		</a>
 	</div>
 </div>

@@ -3103,7 +3103,7 @@ button.close {
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 480px) {
   .navbar-brand {
     float: left;
     margin-left: -5px;
@@ -4468,4 +4468,8 @@ a.list-group-item.active > .badge,
 legend {
   margin-bottom: 0px;
   margin-top: 60px;
+}
+.container {
+  max-width: 980px;
+  padding: 0px 60px;
 }
