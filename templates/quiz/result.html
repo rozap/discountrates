@@ -20,7 +20,7 @@
 	<div class="col col-lg-12">
 		The average discount rate is 
 		 <%= avg_rate.toFixed(4) %>, with a standard deviation of
-		 <%= rate_stdev.toFixed(4) %>. Your average rate was <%= quiz.avg_rate.toFixed(4) %>. This means that you are <%= ((avg_rate - quiz.avg_rate) / stability_stdev).toFixed(4) %> standard deviations away from the average in discount rate consistency.
+		 <%= rate_stdev.toFixed(4) %>. Your average rate was <%= quiz.avg_rate.toFixed(4) %>. This means that you are <%= ((avg_rate - quiz.avg_rate) / stability_stdev).toFixed(4) %> standard deviations away from the average in discount rate consistency. Remember a discount rate is not bad or good, it merely <i>describes</i> how you personally feel about money now and money later.
 	</div>
 </div>
 </script>
@@ -186,11 +186,42 @@
 		<h2>Your Results</h2>
 	</div>
 	<div id="result-body" class="col col-lg-8 col-offset-2">
+		<h3>What is a discount rate?</h3>
+
+		<p>Your discount rate is a number between 0 and 1 that describes how much you care less about future money per year. We calculate it from the choices you make in the quiz.</p>
+
+		<p>Frequently, our future selves have goals that compete with present selves. For instance, you may want to be slim for the summer, but in the moment you eat french fries. While those kinds of comparisons are quite hard to quantify, money is easy to formally represent. If I offer you $100,000 today or $100,001 in a year, everyone will pick $100,000 today. This is because we don't try to maximize money. Instead, we maximize the benefit that money will create. However, if I offer you $100,000 today or $110,000 a year from now, and you select $100,000 today, then I know your discount rate was at most .91, because $110,000*(.91) = $100,000. If your discount rate was greater than .91 per year, then $110,000 in a year would be worth more to your personal happiness than $100,000 today.</p>
+
+		<h3>What is your discount rate?</h3>
 		<div id="scatter-plot"></div>
+		<p>This graph shows choices you made in the quiz, and their imputed discount rates on the x-axis. Red dots represent deals where you chose money later, and blue dots represent deals where you chose money now.</p>
+		
+		<div id="averages-chart" class="chart"></div>
+		<p>This graph compares your average discount rate against other people's average discount rates.</p>
+		<div id="averages-description"></div>
+		
+		<h3>Why should you want to know your discount rate?</h3>
+
+		<p>Since lower discount rates more heavily discount future money, people with lower discount rates may have less concern for saving for retirement, instead maximizing money's present usefulness. Knowing our personal discount rates and the discount rates of others can help us understand why other people might seem like "cheapskates" or "spendy" people. Their discount rates could just differ from our own!</p>
+
+		<p>By understanding your own discount rates, you can also make more informed choices, or attempt to compensate for natural inclinations. For instance, if your natural inclination is towards a very high discount rate (close to 1), you might be over-saving money.</p>
+
+		<p><blockquote>Maybe it'll stop you trying to be so desperate about making more money than you can ever use? You can't take it with you, Mr. Kirby. So what good is it? As near as I can see, the only thing you can take with you is the love of your friends. —<a href="http://en.wikipedia.org/wiki/You_Can't_Take_It_with_You">You Can't Take It With You, 1936</a></blockquote> </p>
+
+		<p>On the other hand, imagine you're trying to understand why you're having a hard time saving for retirement. A low discount rate might indicate you need to take special steps to ensure that you save effectively, like automatic deposits in an account you don't use, because your natural psychological instincts are to spend money on yourself today rather than saving. By adding barriers to spending, you can reduce that temptation.</p>
+
+		<p><blockquote>My husband, all the time, tells me not to spend money. Says that if I keep spending he's going to shut my credit cards off." —<a href="http://en.wikipedia.org/wiki/The_Queen_of_Versailles">The Queen of Versailles, 2012</a></p></blockquote> 
+
+		<h3>What is discount rate consistency?</h3>
+
+		<p>People's discount rates are not always consistent across different intervals of time or different amounts of money. For instance, many would prefer $100,000 in 5 years over $59,049 today, but would prefer $59,049,000,000 now over $100,000,000,000 in 5 years. However, both of those choices have the same discount rate (.90). In the quiz, you were asked a random set of question across different money amounts and across different time periods. A perfectly consistent (or robotic) answerer that only used a discount rate to choose would always select Now when the Later option fell below the robot's discount rate, and would always select Later when the Later option was above the discount rate. Visually, that behavior would look like all the blue and red dots would be perfectly separated, with no overlap.</p>
+
+		<p>When a blue dot or a red dot are on opposite sides of one another along the x-axis, that indicates an inconsistency in discount rates. That inconsistency shows that discount rates are not the only things that matter: the money or time can also impact people's choices. We should expect people with the most consistent discount rates to be the most algorithmic, perhaps because they do not need any money or expect to live forever.</p>
+
+		
+		
 		<div id="stabilities-chart" class="chart"></div>
 		<div id="description"></div>
-		<div id="averages-chart" class="chart"></div>
-		<div id="averages-description"></div>
 	</div>
 
 </div>
