@@ -27,7 +27,7 @@ class QuizValidator(Validator):
             try:
                 self.data['save_priority'] = float(self.data['save_priority'])
                 if(self.data['save_priority'] < 1 or self.data['save_priority'] > 7):
-                    self.add_field_error('save_priority', 'Your priority of saving for the future needs to be between 0 and 7')           
+                    self.add_field_error('save_priority', 'Your priority of saving for the future needs to be between 1 and 7')           
 
             except ValueError:
                 self.add_field_error('save_priority', 'Your priority of saving for the future needs to be a number')           
